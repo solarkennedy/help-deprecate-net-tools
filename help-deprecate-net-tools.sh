@@ -47,7 +47,7 @@ function arp {
   else
     echo "    ip n help"
     echo ""
-    echo "As I'm not sure exactly what the exact replacement command is."
+    echo "(I'm not sure exactly what the exact replacement command is)"
   fi
   deprecate-net-tools-orig $*
   return 1
@@ -56,9 +56,45 @@ function arp {
 
 function ifconfig {
   deprecate-net-tools-warning
-  echo "    ip a (addr)"
-  echo "    ip link"
-  echo "    ip -s (-stats)"
+  if [[ $# == 0 ]]; then
+    echo "    ip a (addr)"
+  elif [[ $# == 1 ]]; then
+    echo "    ip a show dev $1"
+  elif [[ $2 == "add" ]]; then
+    echo "    ip a add $2 dev $1"
+  elif [[ $2 == "allmulti" ]]; then
+    echo "    ip mr iif $1"
+  elif [[ $2 == "arp" ]]; then
+    echo "    ip link set arp on dev $1"
+  elif [[ $2 == "-arp" ]]; then
+    echo "    ip link set arp off dev $1"
+  elif [[ $2 == "broadcast" ]]; then
+    echo "    ip a add broadcast on dev $1"
+  elif [[ $2 == "-broadcast" ]]; then
+    echo "    ip a add broadcast off dev $1"
+  elif [[ $2 == "del" ]]; then
+    echo "    ip a del $3 dev $1"
+  elif [[ $2 == "up" ]]; then
+    echo "    ip link set $1 up"
+  elif [[ $2 == "down" ]]; then
+    echo "    ip link set dev $1 down"
+  elif [[ $2 == "mtu" ]]; then
+    echo "    ip link set dev $1 mtu $3"
+  elif [[ $2 == "multicast" ]]; then
+    echo "    ip link set dev $1 multicast $3"
+  elif [[ $2 == "promisc" ]]; then
+    echo "    ip link set dev $1 promisc on"
+  elif [[ $2 == "-promisc" ]]; then
+    echo "    ip link set dev $1 promisc off"
+  elif [[ $2 == "txquelen" ]]; then
+    echo "    ip link set dev $1 txqueuelen $3"
+  elif [[ $2 == "tunnel" ]]; then
+    echo "    ip tunnel mode sit $1"
+  else
+    echo "    ip link"
+    echo ""
+    echo "(I'm not sure exactly what the exact replacement command is)"
+  fi
   deprecate-net-tools-orig $*
   return 1
 }
