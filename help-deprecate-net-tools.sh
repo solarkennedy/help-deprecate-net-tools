@@ -1,4 +1,19 @@
 #!/bin/bash
+#
+# help-deprecate-net-tools functions
+#
+# These functions are for humans, to help them migrate from the
+# deprecated net-tools commands to their modern replacements.
+#
+# Most of the knowledge encoded in these helpers come from:
+#
+#   http://dougvitale.wordpress.com/2011/12/21/deprecated-linux-networking-commands-and-their-replacements
+#
+# The original source of these functions is in:
+#
+#   https://github.com/solarkennedy/help-deprecate-net-tools/
+#
+
 
 function deprecate-net-tools-orig {
   echo ""
@@ -17,7 +32,23 @@ function deprecate-net-tools-warning {
 
 function arp {
   deprecate-net-tools-warning
-  echo "    ip n (neighbor)"
+  if [[ $1 == "-a" ]] || [[ $1 == "--all" ]]; then
+    echo "    ip n show"
+  elif [[ $1 == "-d" ]] || [[ $1 == "--delete" ]]; then
+    echo "    ip n del $2"
+    echo "or"
+    echo "    ip n flush $2"
+  elif [[ $1 == "-i" ]] || [[ $1 == "--device" ]]; then
+    echo "    ip n [add|chg|del|repl] dev $2"
+  elif [[ $1 == "-s" ]] || [[ $1 == "--set" ]]; then
+    echo "    ip n add $2 lladdr $3 dev [device] nud [nud_state]"
+  elif [[ $1 == "-v" ]] || [[ $1 == "--device" ]]; then
+    echo "    ip -s n"
+  else
+    echo "    ip n help"
+    echo ""
+    echo "As I'm not sure exactly what the exact replacement command is."
+  fi
   deprecate-net-tools-orig $*
   return 1
 }
