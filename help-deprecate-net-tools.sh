@@ -19,7 +19,9 @@ function deprecate-net-tools-orig {
   echo ""
   echo "If you need to run the command exactly, you can use the full path:"
   echo ""
-  echo -n "    "; echo -n `which ${FUNCNAME[1]}`; echo " $*"
+  echo -n "    "
+  echo -n "$(which "${FUNCNAME[1]}")"
+  echo " $*"
   echo ""
 }
 
@@ -49,7 +51,7 @@ function arp {
     echo ""
     echo "(I'm not sure exactly what the exact replacement command is)"
   fi
-  deprecate-net-tools-orig $*
+  deprecate-net-tools-orig "$*"
   return 1
 }
 
@@ -95,7 +97,7 @@ function ifconfig {
     echo ""
     echo "(I'm not sure exactly what the exact replacement command is)"
   fi
-  deprecate-net-tools-orig $*
+  deprecate-net-tools-orig "$*"
   return 1
 }
 
@@ -103,7 +105,7 @@ function ifconfig {
 function iptunnel {
   deprecate-net-tools-warning
   echo "    ip tunnel"
-  deprecate-net-tools-orig $*
+  deprecate-net-tools-orig "$*"
   return 1
 }
 
@@ -111,7 +113,7 @@ function iptunnel {
 function iwconfig {
   deprecate-net-tools-warning
   echo "    iw"
-  deprecate-net-tools-orig $*
+  deprecate-net-tools-orig "$*"
   return 1
 }
 
@@ -120,7 +122,7 @@ function nameif {
   deprecate-net-tools-warning
   echo "    ip link"
   echo "    ifrename"
-  deprecate-net-tools-orig $*
+  deprecate-net-tools-orig "$*"
   return 1
 }
 
@@ -131,7 +133,7 @@ function netstat {
   echo "    iproute"
   echo "    ip -s link"
   echo "    ip maddr"
-  deprecate-net-tools-orig $*
+  deprecate-net-tools-orig "$*"
   return 1
 }
 
@@ -139,6 +141,6 @@ function netstat {
 function route {
   deprecate-net-tools-warning
   echo "    ip r (route)"
-  deprecate-net-tools-orig $*
+  deprecate-net-tools-orig "$*"
   return 1
 }
