@@ -71,7 +71,7 @@ replacement command suggestions:
 
 - [X] `arp`
 - [X] `ifconfig`
-- [ ] `iptunnel`
+- [X] `iptunnel`
 - [ ] `iwconfig`
 - [ ] `nameif`
 - [ ] `netstat`

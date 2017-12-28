@@ -59,11 +59,11 @@ function arp {
 function ifconfig {
   deprecate-net-tools-warning
   if [[ $# == 0 ]]; then
-    echo "    ip a (addr)"
+    echo "    ip addr"
   elif [[ $# == 1 ]]; then
-    echo "    ip a show dev $1"
+    echo "    ip addr show dev $1"
   elif [[ $2 == "add" ]]; then
-    echo "    ip a add $2 dev $1"
+    echo "    ip addr add $2 dev $1"
   elif [[ $2 == "allmulti" ]]; then
     echo "    ip mr iif $1"
   elif [[ $2 == "arp" ]]; then
@@ -71,11 +71,11 @@ function ifconfig {
   elif [[ $2 == "-arp" ]]; then
     echo "    ip link set arp off dev $1"
   elif [[ $2 == "broadcast" ]]; then
-    echo "    ip a add broadcast on dev $1"
+    echo "    ip addr add broadcast on dev $1"
   elif [[ $2 == "-broadcast" ]]; then
-    echo "    ip a add broadcast off dev $1"
+    echo "    ip addr add broadcast off dev $1"
   elif [[ $2 == "del" ]]; then
-    echo "    ip a del $3 dev $1"
+    echo "    ip addr del $3 dev $1"
   elif [[ $2 == "up" ]]; then
     echo "    ip link set $1 up"
   elif [[ $2 == "down" ]]; then
@@ -104,7 +104,7 @@ function ifconfig {
 
 function iptunnel {
   deprecate-net-tools-warning
-  echo "    ip tunnel"
+  echo "    ip tunnel $*"
   deprecate-net-tools-orig "$*"
   return 1
 }
