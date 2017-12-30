@@ -160,8 +160,18 @@ function iwconfig {
 
 function nameif {
   deprecate-net-tools-warning
-  echo "    ip link"
-  echo "    ifrename"
+  if [[ $1 == "-c" ]]; then
+    echo "    ifrename -c $2"
+  elif [[ $2 == "-s" ]]; then
+    echo "    # ifrename doesn't support -s"
+  elif [[ $# -ge 1 ]]; then
+    echo "    ip link set dev $1 name [new name]"
+    echo "    # or"
+    echo "    ifrename -i $1 -n [new name]"
+  else
+    echo "    ifrename"
+    echo "    # I'm not sure exactly what the replacement command is"
+  fi
   deprecate-net-tools-orig "$*"
   return 1
 }

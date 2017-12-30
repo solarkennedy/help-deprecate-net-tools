@@ -73,7 +73,7 @@ replacement command suggestions:
 - [X] `ifconfig`
 - [X] `iptunnel`
 - [X] `iwconfig`
-- [ ] `nameif`
+- [X] `nameif`
 - [ ] `netstat`
 - [ ] `ipmaddr`
 - [ ] `mii-tool`
