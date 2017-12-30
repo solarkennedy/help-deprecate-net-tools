@@ -72,7 +72,7 @@ replacement command suggestions:
 - [X] `arp`
 - [X] `ifconfig`
 - [X] `iptunnel`
-- [ ] `iwconfig`
+- [X] `iwconfig`
 - [ ] `nameif`
 - [ ] `netstat`
 - [ ] `ipmaddr`

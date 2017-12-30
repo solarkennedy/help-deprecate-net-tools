@@ -112,7 +112,47 @@ function iptunnel {
 
 function iwconfig {
   deprecate-net-tools-warning
-  echo "    iw"
+  if [[ $# == 0 ]]; then
+    echo "    ip dev"
+  elif [[ $# == 1 ]]; then
+    echo "    iw dev $1 link"
+  elif [[ $2 == "essid" ]]; then
+    echo "    iw $1 connect $2"
+  elif [[ $2 == "mode" ]]; then
+    echo "    iw $1 mode $3"
+  elif [[ $2 == "freq" ]]; then
+    echo "    iw $1 connect [ESSID] $3"
+  elif [[ $2 == "bit" ]] || [[ $2 == "rate" ]]; then
+    echo "    iw $1 set bitrates legacy-2.4 $3"
+  elif [[ $2 == "enc" ]] || [[ $2 == "key" ]]; then
+    echo "    iw $1 connect [ESSID] keys 0:$3"
+  elif [[ $2 == "power" ]]; then
+    echo "    iw dev $1 set power_save $3"
+  elif [[ $2 == "nickname" ]]; then
+    echo "    # iw doesn't support setting a station name"
+  elif [[ $2 == "nwid" ]]; then
+    echo "    # iw doesn't support setting an nwid (pre-802.11)"
+  elif [[ $2 == "ap" ]]; then
+    echo "    iw $1 connect $3"
+  elif [[ $2 == "txpower" ]]; then
+    echo "    iw dev $1 set txpower $3"
+  elif [[ $2 == "sens" ]]; then
+    echo "    # iw doesn't support setting the sensitivity"
+  elif [[ $2 == "retry" ]]; then
+    echo "    iw phy $1 set retry $3"
+  elif [[ $2 == "rts" ]]; then
+    echo "    iw phy $1 set rts $3"
+  elif [[ $2 == "frag" ]]; then
+    echo "    iw phy $1 set frag $3"
+  elif [[ $2 == "modulation" ]]; then
+    echo "    # iw doesn't support setting the modulation"
+  elif [[ $2 == "commit" ]]; then
+    echo "    # iw doesn't support 'commit'"
+  else
+    echo "    iw dev"
+    echo ""
+    echo "(I'm not sure exactly what the exact replacement command is)"
+  fi
   deprecate-net-tools-orig "$*"
   return 1
 }
