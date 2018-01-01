@@ -178,12 +178,103 @@ function nameif {
 
 
 function netstat {
+  local ORIG_ARGS TEMP SS_OPTS
+  ORIG_ARGS="$*"
   deprecate-net-tools-warning
-  echo "    ss"
-  echo "    iproute"
-  echo "    ip -s link"
-  echo "    ip maddr"
-  deprecate-net-tools-orig "$*"
+  TEMP=$(getopt -o tuUSwx64rigsMvWnNepoclA::aFCZ --long route,interfaces,groups,statistics,masquerade,verbose,wide,numeric,numeric-hosts,numeric-ports,numeric-users,symbolic,extend,program,timers,continuous,listening,all,fib,cache,context,tcp,udp,udplite,sctp,raw,unix,ax25,ipx,netrom,af,protocol:: -- "$@")
+  eval set -- "$TEMP"
+  #return 1
+  while true; do
+    case "$1" in
+      -r|--route)
+        echo "    ip route"
+	;;
+      -i|--interfaces)
+        echo "    ip -s link"
+	;;
+      -g|--groups)
+        echo "    ip maddr"
+        ;;
+      -M|--masquerade)
+        echo "# there is no equivalent ss option for showing masqueraded connections"
+        ;;
+      -v|--verbose)
+        echo "# there is no equivalent ss option for --verbose"
+        ;;
+      -W|--wide)
+        echo "# there is no equivalent ss option for not truncating ips"
+        ;;
+      -l|--listening)
+        SS_OPTS="${SS_OPTS}l"
+        ;;
+      -n|--numeric)
+        SS_OPTS="${SS_OPTS}n"
+        ;;
+      -p|--program)
+        SS_OPTS="${SS_OPTS}p"
+        ;;
+      --numeric-hosts)
+        echo "# there is no equivalent ss option for --numeric-hosts"
+        ;;
+      --numeric-ports)
+        echo "# there is no equivalent ss option for --numeric-ports"
+        ;;
+      --numeric-users)
+        echo "# there is no equivalent ss option for --numeric-users"
+        ;;
+      -N|--symbolic)
+        SS_OPTS="${SS_OPTS}r"
+        ;;
+      -e|--extend)
+        SS_OPTS="${SS_OPTS}e"
+        ;;
+      -o|--timers)
+        SS_OPTS="${SS_OPTS}o"
+        ;;
+      -c|--continuous)
+        echo "# ss doesn't have a native way to output continouous output."
+        echo "# but you can prepend it with the 'watch' command to simulate that behavior."
+        ;;
+      -a|--all)
+        SS_OPTS="${SS_OPTS}a"
+        ;;
+      -F|--fib)
+        echo "    ip -s route show cache"
+        ;;
+      -C|--cache)
+        echo "    ip route list cache"
+        ;;
+      -s|--statistics)
+        SS_OPTS="${SS_OPTS}s"
+        ;;
+      -T|--notrim)
+        echo "# ss doesn't support --notrim"
+        ;;
+      -t|--tcp)
+        SS_OPTS="${SS_OPTS}t"
+        ;;
+      -u|--udp)
+        SS_OPTS="${SS_OPTS}u"
+        ;;
+      -w|--raw)
+        SS_OPTS="${SS_OPTS}w"
+        ;;
+      -x|--unix)
+        SS_OPTS="${SS_OPTS}x"
+        ;;
+      -Z|--context)
+        SS_OPTS="${SS_OPTS}Z"
+        ;;
+      --)
+        break
+        ;;
+    esac
+    shift
+  done
+  if [[ ! -z $SS_OPTS ]]; then
+    echo "    ss -${SS_OPTS}"
+  fi
+  deprecate-net-tools-orig "$ORIG_ARGS"
   return 1
 }
 

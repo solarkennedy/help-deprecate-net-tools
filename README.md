@@ -74,7 +74,7 @@ replacement command suggestions:
 - [X] `iptunnel`
 - [X] `iwconfig`
 - [X] `nameif`
-- [ ] `netstat`
+- [X] `netstat`
 - [ ] `ipmaddr`
 - [ ] `mii-tool`
 - [ ] `route`
