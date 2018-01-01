@@ -76,5 +76,5 @@ replacement command suggestions:
 - [X] `nameif`
 - [X] `netstat`
 - [X] `route`
-- [ ] `ipmaddr`
+- [X] `ipmaddr`
 - [ ] `mii-tool`

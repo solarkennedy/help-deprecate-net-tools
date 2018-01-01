@@ -325,3 +325,11 @@ function route {
   deprecate-net-tools-orig "$*"
   return 1
 }
+
+
+function ipmaddr {
+  deprecate-net-tools-warning
+  echo "    ip maddr $*"
+  deprecate-net-tools-orig "$*"
+  return 1
+}
