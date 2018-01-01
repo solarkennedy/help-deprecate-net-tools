@@ -304,11 +304,11 @@ function route {
     elif [[ $2 == "gw" ]] || [[ $3 == "gw" ]]; then
       echo "    ip route $1 default via $4"
     elif [[ $2 == "-host" ]] || [[ $2 == "-net" ]]; then
-      echo "    # There is no equivilant ip route command for $2"
+      echo "    # There is no equivalent ip route command for $2"
     elif [[ $2 == "metric" ]]; then
       echo "    ip route $1 metric $2"
     elif [[ $2 == "mod" ]] || [[ $2 == "dyn" ]] || [[ $2 == "reinstate" ]]; then
-      echo "    # There is no equivilant ip route command for $2"
+      echo "    # There is no equivalent ip route command for $2"
     elif [[ $2 == "mss" ]]; then
       echo "    ip route $1 advmss $2"
     elif [[ $2 == "reject" ]]; then
@@ -320,7 +320,7 @@ function route {
     fi
   else
     echo "    ip route help"
-    echo "    # I'm not sure what the equivilant ip route command is"
+    echo "    # I'm not sure what the equivalent ip route command is"
   fi
   deprecate-net-tools-orig "$*"
   return 1
@@ -330,6 +330,41 @@ function route {
 function ipmaddr {
   deprecate-net-tools-warning
   echo "    ip maddr $*"
+  deprecate-net-tools-orig "$*"
+  return 1
+}
+
+
+function mii-tool {
+  deprecate-net-tools-warning
+  if [[ $1 == "-V" ]] || [[ $1 == "--version" ]]; then
+    echo "    ethtool --version"
+  elif [[ $1 == "-v" ]] || [[ $1 == "--verbose" ]]; then
+    echo "    # ethtool has no $1 option. Please remove it and try again for better sugggestions."
+  elif [[ $# -eq 0 ]]; then
+    echo "    # ethtool has no method to list all interfaces. Try ethtool eth0"
+  elif [[ $1 == "-F" ]] || [[ $1 == "--force" ]]; then
+    echo "    ethtool -s [device] speed [SPEED] duplex [half|full]"
+  elif [[ $1 == "-A" ]] || [[ $1 == "--advertise" ]]; then
+    echo "    ethtool -s [device] advertise HEX"
+    echo "    # Lookup the exact hex value in 'man ethtool'"
+  elif [[ $1 == "-p" ]] || [[ $1 == "--phy" ]]; then
+    echo "    ethtool -s [device] phyad ADDR"
+  elif [[ $1 == "-w" ]] || [[ $1 == "--watch" ]]; then
+    echo "    # ethtool has no native watch argument"
+    echo "    # Try prepending the command with the 'watch' command"
+  elif [[ $1 == "-l" ]] || [[ $1 == "--log" ]]; then
+    echo "    # ethtool has no equivalent option for $1"
+  elif [[ $1 == "-r" ]] || [[ $1 == "--restart" ]]; then
+    echo "    ethtool -r $2"
+  elif [[ $1 == "-R" ]] || [[ $1 == "--reset" ]]; then
+    echo "    # ethtool has no option to reset settings. Try a reboot?"
+  elif [[ $# -eq 1 ]]; then
+    echo "    ethtool $1"
+  else
+    echo "    ethtool --help"
+    echo "    # I'm not sure what the equivalent ethtool command is"
+  fi
   deprecate-net-tools-orig "$*"
   return 1
 }

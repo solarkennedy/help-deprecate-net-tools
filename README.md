@@ -77,4 +77,8 @@ replacement command suggestions:
 - [X] `netstat`
 - [X] `route`
 - [X] `ipmaddr`
-- [ ] `mii-tool`
+- [X] `mii-tool`
+
+### Improvements
+
+These helpers are not complete and contain inaccuracies and bugs. Please make a pull request!
