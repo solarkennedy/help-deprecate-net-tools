@@ -75,6 +75,6 @@ replacement command suggestions:
 - [X] `iwconfig`
 - [X] `nameif`
 - [X] `netstat`
+- [X] `route`
 - [ ] `ipmaddr`
 - [ ] `mii-tool`
-- [ ] `route`

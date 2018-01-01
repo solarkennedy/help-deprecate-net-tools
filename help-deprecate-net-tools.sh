@@ -281,7 +281,47 @@ function netstat {
 
 function route {
   deprecate-net-tools-warning
-  echo "    ip r (route)"
+  if [[ $# == 0 ]]; then
+    echo "    ip route"
+  elif [[ $1 == "-A" ]]; then
+    echo "    ip -f $2 $3"
+  elif [[ $1 == "-C" ]] || [[ $1 == "--cache" ]]; then
+    echo "    ip route show cache"
+  elif [[ $1 == "-e" ]] || [[ $1 == "-ee" ]]; then
+    echo "    ip route show"
+  elif [[ $1 == "-F" ]] || [[ $1 == "--fib" ]]; then
+    echo "    ip route show cache"
+  elif [[ $1 == "-h" ]] || [[ $1 == "--help" ]]; then
+    echo "    ip route help"
+  elif [[ $1 == "-n" ]]; then
+    echo "    ip route"
+    echo "    # The ip command disables network resolution by default"
+  elif [[ $1 == "-V" ]] || [[ $1 == "--version" ]]; then
+    echo "    ip -V"
+  elif [[ $1 == "add" ]] || [[ $1 == "del" ]]; then
+    if [[ $2 == "dev" ]]; then
+      echo "    ip route $1 dev $3"
+    elif [[ $2 == "gw" ]] || [[ $3 == "gw" ]]; then
+      echo "    ip route $1 default via $4"
+    elif [[ $2 == "-host" ]] || [[ $2 == "-net" ]]; then
+      echo "    # There is no equivilant ip route command for $2"
+    elif [[ $2 == "metric" ]]; then
+      echo "    ip route $1 metric $2"
+    elif [[ $2 == "mod" ]] || [[ $2 == "dyn" ]] || [[ $2 == "reinstate" ]]; then
+      echo "    # There is no equivilant ip route command for $2"
+    elif [[ $2 == "mss" ]]; then
+      echo "    ip route $1 advmss $2"
+    elif [[ $2 == "reject" ]]; then
+      echo "    ip route $1 prohibit $2"
+    elif [[ $2 == "window" ]]; then
+      echo "    ip route $1 window $2"
+    else
+      echo "    ip route $*"
+    fi
+  else
+    echo "    ip route help"
+    echo "    # I'm not sure what the equivilant ip route command is"
+  fi
   deprecate-net-tools-orig "$*"
   return 1
 }
